@@ -97,13 +97,26 @@ category System {
 					//firmwareUpdater.connect
 
 		| maliciousFirmwareUpload
-				info: "Maliciously upload a forged firmware leads to full access on the ECU and ability to inject messages on the previous running services."
-				->  access,
-					_firmwareUploadNetworkAccess
+				info: "Attempt to upload malicious firmware to an ECU"
+				->  crackProgrammingModeAuthorization,
+					bypassProgrammingModeAuthorization
+
+		| crackProgrammingModeAuthorization [ExponentialDistribution(20.0)]
+				info: "Attempt to crack the authorization protocol used on the ECU"
+				->	uploadFirmware
+
+		& bypassProgrammingModeAuthorization
+				info: "Bypass programming mode authorization protocol if it is not enabled"
+				-> uploadFirmware
+
+		# programmingModeAuthorization
+				info: "Right to program ECU and upload new firmware is protected with an authorization protocol, for example cryptographic challenge-response protocol"
+				-> bypassProgrammingModeAuthorization
 
 		& uploadFirmware
-				info: "Updating the firmware leads to the ability to inject messages not only on the previous running services but also on network. Additionaly it leads to J1939 attacks."
-				->  _firmwareUploadNetworkAccess
+				info: "Updating the firmware leads to full access on the ECU and the ability to inject messages not only on the previous running services but also on network. Additionaly it leads to J1939 attacks."
+				->  access,
+					_firmwareUploadNetworkAccess
 
 		| _firmwareUploadNetworkAccess
 				info: "This a helper attack step because both above attack steps are leading to the same connections."
@@ -112,8 +125,8 @@ category System {
 					vehiclenetworks._networkForwarding // This is left here because it might be needed! Or it might not...
 
 		| passFirmwareValidation
-				info: "If the firmware validation key is stored in the ECU, this means that the firmware validation is passed and a new firmware can be uploaded."
-				-> uploadFirmware
+				info: "If the firmware validation is passed, the attacker can try to upload validated firmware to the ECU."
+				-> maliciousFirmwareUpload
 
 		| access
 				info: "Attackers have access to the ECU if they have compromised its firmware, bypassed access control or properly authenticated themselves."
@@ -253,11 +266,11 @@ category System {
 
 		| crackFirmwareValidation [ExponentialDistribution(20.0)]
 				info: "Crack firmware validation if it is enabled."
-				->  hardware.maliciousFirmwareUpload
+				->  hardware.passFirmwareValidation
 
 		& bypassFirmwareValidation
 				info: "Bypass firmware validation if it is not enabled."
-				->  hardware.maliciousFirmwareUpload
+				->  hardware.passFirmwareValidation
 
 		# firmwareValidation
 				info: "Code signing and verification during upload, use of strong checksum functions and/or don’t distribute the private keys for signing."
@@ -768,7 +781,7 @@ category Security {
 					readFirmwareAccessKey
 
 		| readFirmwareAccessKey
-				info: "The action of reading a stored firmware validation/access key."
+				info: "The action of reading a stored firmware validation key."
 				-> machines.passFirmwareValidation
 	}
 
