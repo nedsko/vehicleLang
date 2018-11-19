@@ -104,7 +104,7 @@ public class CoreVehicleNetworkTest {
    */
    // TARGET: CAN attacks ENTRY_POINT: CAN.physicalAccess
       CANNetwork canNet = new CANNetwork("CANNetwork", false);
-      ECU ecu = new ECU("ECU", false, false);
+      ECU ecu = new ECU("ECU", false, false, false);
       
       canNet.addNetworkECUs(ecu);
 

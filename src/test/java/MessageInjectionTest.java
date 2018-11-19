@@ -61,7 +61,7 @@ public class MessageInjectionTest {
 
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName()); // Printing the test's name
       
-      ECU Ecu1 = new ECU ("Ecu#1", true, false); // Enabled operation mode and DISABLED message confliction protection.
+      ECU Ecu1 = new ECU ("Ecu#1", false, true, false); // Enabled operation mode and DISABLED message confliction protection.
       ECU Ecu2 = new ECU ("Ecu#2");
       ConnectionlessDataflow dataflow = new ConnectionlessDataflow ("Dataflow");
       ConnectionlessDataflow dataflow2 = new ConnectionlessDataflow ("Dataflow#2");
@@ -108,7 +108,7 @@ public class MessageInjectionTest {
 
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName()); // Printing the test's name
       
-      ECU Ecu1 = new ECU ("Ecu#1", true, true); // Enabled operation mode and message confliction protection.
+      ECU Ecu1 = new ECU ("Ecu#1", false, true, true); // Enabled operation mode and message confliction protection.
       ECU Ecu2 = new ECU ("Ecu#2");
       ConnectionlessDataflow dataflow = new ConnectionlessDataflow ("Dataflow#3");
       ConnectionlessDataflow dataflow2 = new ConnectionlessDataflow ("Dataflow#4");
@@ -153,7 +153,7 @@ public class MessageInjectionTest {
     
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName()); // Printing the test's name
 
-      ECU Ecu1 = new ECU ("Ecu#1", true, false); // Enabled operation mode and disabled message confliction protection.
+      ECU Ecu1 = new ECU ("Ecu#1", false, true, false); // Enabled operation mode and disabled message confliction protection.
       ECU Ecu2 = new ECU ("Ecu#2");
       ConnectionlessDataflow dataflow = new ConnectionlessDataflow ("Dataflow");
       ConnectionlessDataflow dataflow2 = new ConnectionlessDataflow ("Dataflow#2");
@@ -202,7 +202,7 @@ public class MessageInjectionTest {
 
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName()); // Printing the test's name
 
-      ECU Ecu1 = new ECU ("Ecu#1", true, true); // Enabled operation mode and message confliction protection.
+      ECU Ecu1 = new ECU ("Ecu#1", false, true, true); // Enabled operation mode and message confliction protection.
       ECU Ecu2 = new ECU ("Ecu#2");
       ConnectionlessDataflow dataflow = new ConnectionlessDataflow ("Dataflow#5");
       ConnectionlessDataflow dataflow2 = new ConnectionlessDataflow ("Dataflow#6");
@@ -262,7 +262,7 @@ public class MessageInjectionTest {
 
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName()); // Printing the test's name
 
-      ECU Ecu1 = new ECU ("Ecu#1", true, true); // Enabled operation mode and message confliction protection.
+      ECU Ecu1 = new ECU ("Ecu#1", false, true, true); // Enabled operation mode and message confliction protection.
       ECU Ecu2 = new ECU ("Ecu#2");
       ConnectionlessDataflow dataflow = new ConnectionlessDataflow ("Dataflow#5");
       ConnectionlessDataflow dataflow2 = new ConnectionlessDataflow ("Dataflow#6");
@@ -322,7 +322,7 @@ public class MessageInjectionTest {
 
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName()); // Printing the test's name
 
-      ECU Ecu1 = new ECU ("Ecu#1", true, true); // Enabled operation mode and message confliction protection.
+      ECU Ecu1 = new ECU ("Ecu#1", false, true, true); // Enabled operation mode and message confliction protection.
       ECU Ecu2 = new ECU ("Ecu#2");
       ConnectionlessDataflow dataflow = new ConnectionlessDataflow ("Dataflow#7");
       ConnectionlessDataflow dataflow2 = new ConnectionlessDataflow ("Dataflow#8");
@@ -369,7 +369,7 @@ public class MessageInjectionTest {
 
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName()); // Printing the test's name
 
-      ECU Ecu1 = new ECU ("Ecu#1", true, true); // Enabled operation mode and message confliction protection.
+      ECU Ecu1 = new ECU ("Ecu#1", false, true, true); // Enabled operation mode and message confliction protection.
       ECU Ecu2 = new ECU ("Ecu#2");
       ConnectionlessDataflow dataflow = new ConnectionlessDataflow ("Dataflow#9");
       ConnectionlessDataflow dataflow2 = new ConnectionlessDataflow ("Dataflow#10");
@@ -419,7 +419,7 @@ public class MessageInjectionTest {
 
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName()); // Printing the test's name
 
-      ECU Ecu1 = new ECU ("Ecu#1", true, true); // Enabled operation mode and message confliction protection.
+      ECU Ecu1 = new ECU ("Ecu#1", false, true, true); // Enabled operation mode and message confliction protection.
       ECU Ecu2 = new ECU ("Ecu#2");
       Firmware firmware = new Firmware ("Firmware", true);
       ConnectionlessDataflow dataflow = new ConnectionlessDataflow ("Dataflow#9");

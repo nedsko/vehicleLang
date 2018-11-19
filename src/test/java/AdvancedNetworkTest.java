@@ -40,9 +40,9 @@ TransmitterEcu <---> vNet1 <---> GatewayECU <---> vNet2 <---> ListenerECU
                 break;
       }
       // Start of test
-      ECU SrvEcu = new ECU ("TransmitterECU", true, true); // Enabled operation mode and message confliction protection on all ECUs.
-      ECU ClnEcu = new ECU ("ListenerECU", true, true);
-      GatewayECU GateEcu = new GatewayECU ("GatewayECU", firewallStatus, true, true);
+      ECU SrvEcu = new ECU ("TransmitterECU", false, true, true); // Enabled operation mode and message confliction protection on all ECUs.
+      ECU ClnEcu = new ECU ("ListenerECU", false, true, true);
+      GatewayECU GateEcu = new GatewayECU ("GatewayECU", firewallStatus, false, true, true);
       IDPS idps;
       VehicleNetwork vNet1 = new VehicleNetwork ("vNet1");
       VehicleNetwork vNet2 = new VehicleNetwork ("vNet2");
@@ -160,10 +160,10 @@ TransmitterEcu <---> vNet1 <---> GatewayECU <---> vNet2 <---> ListenerECU
       */
       // TARGET: dataflow.transmit & dataflow2.respond ENTRY_POINT: EthGatewayECU.access
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName()); // Printing the test's name
-      ECU Ecu1 = new ECU ("ECU#1", true, true); // Enabled operation mode and message confliction protection
-      ECU Ecu2 = new ECU ("ECU#2", true, true);
+      ECU Ecu1 = new ECU ("ECU#1", false, true, true); // Enabled operation mode and message confliction protection
+      ECU Ecu2 = new ECU ("ECU#2", false, true, true);
       PhysicalMachine PhyMachine = new PhysicalMachine ("Sensor/Actuator");
-      EthernetGatewayECU EthGateEcu = new EthernetGatewayECU("EthGatewayECU", true, true, true); // Enabled firewall
+      EthernetGatewayECU EthGateEcu = new EthernetGatewayECU("EthGatewayECU", true, false, true, true); // Enabled firewall
       CANNetwork vNet = new CANNetwork ("CAN");
       EthernetNetwork ethNet = new EthernetNetwork ("Ethernet");
       ConnectionlessDataflow dataflow = new ConnectionlessDataflow ("Dataflow");
@@ -201,10 +201,10 @@ TransmitterEcu <---> vNet1 <---> GatewayECU <---> vNet2 <---> ListenerECU
       // TARGET: dataflow.transmit & dataflow2.respond ENTRY_POINT: vNet.physicalAccess
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName());
       boolean firewallStatus = false;
-      ECU Ecu1 = new ECU ("ECU#1", true, true); // Enabled operation mode and message confliction protection
-      ECU Ecu2 = new ECU ("ECU#2", true, true);
+      ECU Ecu1 = new ECU ("ECU#1", false, true, true); // Enabled operation mode and message confliction protection
+      ECU Ecu2 = new ECU ("ECU#2", false, true, true);
       PhysicalMachine PhyMachine = new PhysicalMachine ("Sensor/Actuator");
-      EthernetGatewayECU EthGateEcu = new EthernetGatewayECU("EthGatewayECU", firewallStatus, true, true);
+      EthernetGatewayECU EthGateEcu = new EthernetGatewayECU("EthGatewayECU", firewallStatus, false, true, true);
       CANNetwork vNet = new CANNetwork ("CAN");
       EthernetNetwork ethNet = new EthernetNetwork ("Ethernet");
       ConnectionlessDataflow dataflow = new ConnectionlessDataflow ("Dataflow");
@@ -246,8 +246,8 @@ TransmitterEcu <---> vNet1 <---> GatewayECU <---> vNet2 <---> ListenerECU
       */
       // TARGET: dataflow.maliciousRespond ENTRY_POINT: Ecu#1.access
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName());
-      ECU Ecu1 = new ECU ("ECU#1", true, true); // Enabled operation mode and message confliction protection
-      ECU Ecu2 = new ECU ("ECU#2", true, true);
+      ECU Ecu1 = new ECU ("ECU#1", false, true, true); // Enabled operation mode and message confliction protection
+      ECU Ecu2 = new ECU ("ECU#2", false, true, true);
       CANNetwork vNet1 = new CANNetwork ("CAN");
       LINNetwork vNet2 = new LINNetwork ("LIN");
       ConnectionlessDataflow dataflow = new ConnectionlessDataflow("Dataflow");
@@ -284,8 +284,8 @@ TransmitterEcu <---> vNet1 <---> GatewayECU <---> vNet2 <---> ListenerECU
     */
     // TARGET: unlockDataflow & StartEngineDataflow maliciousRespond ENTRY_POINT: BCM.bypassAccessControl
     System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName());
-    ECU bcm = new ECU ("BCM", true, true);
-    ECU ecm = new ECU ("ECM", true, true);
+    ECU bcm = new ECU ("BCM", false, true, true);
+    ECU ecm = new ECU ("ECM", false, true, true);
     TransmitterService lockService = new TransmitterService("LockService");
     CANNetwork can = new CANNetwork ("CAN");
     LINNetwork lin = new LINNetwork ("LIN");
@@ -325,8 +325,8 @@ TransmitterEcu <---> vNet1 <---> GatewayECU <---> vNet2 <---> ListenerECU
       // TARGET: dataflow.maliciousRespond ENTRY_POINT: Ecu#1.access
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName());
       boolean noFullJ1939Support = false;
-      ECU Ecu1 = new ECU ("ECU#1", true, true); // Enabled operation mode and message confliction protection
-      ECU Ecu2 = new ECU ("ECU#2", true, true);
+      ECU Ecu1 = new ECU ("ECU#1", false, true, true); // Enabled operation mode and message confliction protection
+      ECU Ecu2 = new ECU ("ECU#2", false, true, true);
       CANNetwork vNet1 = new CANNetwork ("CAN");
       J1939Network vNet2 = new J1939Network ("J1939", noFullJ1939Support, false);
       ConnectionOrientedDataflow dataflow = new ConnectionOrientedDataflow("Dataflow");

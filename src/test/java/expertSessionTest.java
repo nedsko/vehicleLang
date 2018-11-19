@@ -26,7 +26,7 @@ public class expertSessionTest {
       // Start of test
       boolean firewallStatus = true;
       InfotainmentSystem infosys = new InfotainmentSystem("infosys");
-      GatewayECU gwECU = new GatewayECU("gwECU", firewallStatus, true, true);
+      GatewayECU gwECU = new GatewayECU("gwECU", firewallStatus, false, true, true);
       CANNetwork can = new CANNetwork("can");
       CANNetwork internalCan = new CANNetwork("internalCan");
       ECU tms = new ECU("TMS"); //Transmission

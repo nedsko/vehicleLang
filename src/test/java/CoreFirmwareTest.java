@@ -14,7 +14,7 @@ public class CoreFirmwareTest {
           ---> Credentials(A)
       */
       // Entry point: Credentials.read and Ecu.access
-      ECU ecu = new ECU("ECU", true, true); // Enabled operation mode and message confliction protection.
+      ECU ecu = new ECU("ECU", false, true, true); // Enabled operation mode and message confliction protection.
       Firmware fw = new Firmware("Firmware", true); // Firmware validation is enabled.
       Credentials creds = new Credentials("Credentials");
       
@@ -42,7 +42,7 @@ public class CoreFirmwareTest {
            ---X No credentials are stored
       */
       // Entry point: Ecu.connect
-      ECU ecu = new ECU("ECU", true, true); // Enabled operation mode and message confliction protection.
+      ECU ecu = new ECU("ECU", false, true, true); // Enabled operation mode and message confliction protection.
       Firmware fw = new Firmware("Firmware", true); // Firmware validation is enabled.
       
       ecu.addFirmware(fw);
@@ -67,7 +67,7 @@ public class CoreFirmwareTest {
          Ecu <---> Firmware
       */
       // Entry point: Ecu.connect
-      ECU ecu = new ECU("ECU", true, true); // Enabled operation mode and message confliction protection.
+      ECU ecu = new ECU("ECU", false, true, true); // Enabled operation mode and message confliction protection.
       Firmware fw = new Firmware("Firmware", false); // Firmware validation is disabled.
       
       ecu.addFirmware(fw);

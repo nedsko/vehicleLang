@@ -24,9 +24,9 @@ public class newTest {
       // Start of test
       boolean firewallStatus = true;
       boolean firmwareValidationStatus = false;
-      ECU acceleratorEcu = new ECU ("acceleratorEcu", true, true); // Enabled operation mode and message confliction protection on all ECUs.
-      ECU engineEcu = new ECU ("engineEcu", true, true);
-      GatewayECU gateEcu = new GatewayECU ("GatewayECU", firewallStatus, true, true);
+      ECU acceleratorEcu = new ECU ("acceleratorEcu", false, true, true); // Enabled operation mode and message confliction protection on all ECUs.
+      ECU engineEcu = new ECU ("engineEcu", false, true, true);
+      GatewayECU gateEcu = new GatewayECU ("GatewayECU", firewallStatus, false, true, true);
       IDPS idps = new IDPS ("IDPS");
       VehicleNetwork vNet1 = new VehicleNetwork ("vNet1");
       VehicleNetwork vNet2 = new VehicleNetwork ("vNet2");
