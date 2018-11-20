@@ -325,8 +325,8 @@ TransmitterEcu <---> vNet1 <---> GatewayECU <---> vNet2 <---> ListenerECU
       // TARGET: dataflow.maliciousRespond ENTRY_POINT: Ecu#1.access
       System.out.println("### " + Thread.currentThread().getStackTrace()[1].getMethodName());
       boolean noFullJ1939Support = false;
-      ECU Ecu1 = new ECU ("ECU#1", false, true, true); // Enabled operation mode and message confliction protection
-      ECU Ecu2 = new ECU ("ECU#2", false, true, true);
+      ECU Ecu1 = new ECU ("ECU#1", false, false, true); // Enabled message confliction protection
+      ECU Ecu2 = new ECU ("ECU#2", false, false, true);
       CANNetwork vNet1 = new CANNetwork ("CAN");
       J1939Network vNet2 = new J1939Network ("J1939", noFullJ1939Support, false);
       ConnectionOrientedDataflow dataflow = new ConnectionOrientedDataflow("Dataflow");

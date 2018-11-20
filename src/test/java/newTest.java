@@ -24,9 +24,9 @@ public class newTest {
       // Start of test
       boolean firewallStatus = true;
       boolean firmwareValidationStatus = false;
-      ECU acceleratorEcu = new ECU ("acceleratorEcu", false, true, true); // Enabled operation mode and message confliction protection on all ECUs.
-      ECU engineEcu = new ECU ("engineEcu", false, true, true);
-      GatewayECU gateEcu = new GatewayECU ("GatewayECU", firewallStatus, false, true, true);
+      ECU acceleratorEcu = new ECU ("acceleratorEcu", false, false, true); // Enabled operation mode and message confliction protection on all ECUs.
+      ECU engineEcu = new ECU ("engineEcu", false, false, true);
+      GatewayECU gateEcu = new GatewayECU ("GatewayECU", firewallStatus, false, false, true);
       IDPS idps = new IDPS ("IDPS");
       VehicleNetwork vNet1 = new VehicleNetwork ("vNet1");
       VehicleNetwork vNet2 = new VehicleNetwork ("vNet2");
@@ -59,15 +59,15 @@ public class newTest {
       vNet2.physicalAccess.assertCompromisedInstantaneously();
       vNet2.accessNetworkLayer.assertCompromisedInstantaneously();
       gateEcu.connect.assertCompromisedInstantaneously();
-      fw.maliciousFirmwareModification.assertCompromisedInstantaneously();
-      vNet1.accessNetworkLayer.assertCompromisedInstantaneously();
-      accelarationDataflow.transmit.assertCompromisedInstantaneously();
-      accelarationDataflow.eavesdrop.assertCompromisedInstantaneously();
+      fw.maliciousFirmwareModification.assertCompromisedWithEffort();
+      vNet1.accessNetworkLayer.assertCompromisedInstantaneouslyFrom(fw.maliciousFirmwareModification);
+      accelarationDataflow.transmit.assertCompromisedInstantaneouslyFrom(vNet1.accessNetworkLayer);
+      accelarationDataflow.eavesdrop.assertCompromisedInstantaneouslyFrom(vNet1.accessNetworkLayer);
       
       //engine.access.assertUncompromised();
-      acceleratorAccount.idAuthenticate.assertCompromisedInstantaneously();
-      engineEcu.idAccess.assertCompromisedInstantaneously();
-      engine.manipulate.assertCompromisedInstantaneously(); // We should be able to achieve this at least via engineEcu.access or something similar.
+      acceleratorAccount.idAuthenticate.assertCompromisedWithEffort();
+      engineEcu.idAccess.assertCompromisedWithEffort();
+      engine.manipulate.assertCompromisedWithEffort(); // We should be able to achieve this at least via engineEcu.access or something similar.
     }
    
     @After
