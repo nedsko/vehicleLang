@@ -319,46 +319,67 @@ category System {
 					executor._accessData
 	}
 
-	abstractAsset UDSServer extends Service
+	abstractAsset UDSServer extends NetworkService
 		info: "Represents an ISO 14229 - Unified Diagnostics Service (UDS) server running on an ECU. Extensions of this asset represent specific groups of UDS services."
 	{
 		// TODO: Add steps shared by all UDS services.
+		// Possible to connect these to Accounts to represent someone actually having security access?
+		// Maybe have a defense called "notSupported" which is enabled if a certain service is not supported.
+		// To do one attack messages from different function units may have to be used. Research the attack steps between different groups should be connected.
+		// Probably going to need entry points here such as "connect"
+
 	}
 
 	asset UDSDiagnosticCommunicationServices extends UDSServer
 		info: "Represents all the UDS services provided by the functional unit 'Diagnostic and Communications Management' running on an ECU."
 	{
 		// TODO: Add steps specific for this group
+		// Should lead to changeOperationMode or attemptChangeOperationMode because of service "Diagnostic Session Control"
+			// Maybe have a specific one for programming mode which leads to firmware updates
+		// Has a function to reset ECU, so maybe should lead to shutdown?
+		// Communication Control "sending and receiving of messages can be turned off in the control unit.", lead to shutdown?(or offline if added)
 	}
 
 	asset UDSDataTransmissionServices extends UDSServer
 		info: "Represents all the UDS services provided by the functional unit 'Data Transmission' running on an ECU."
 	{
 		// TODO: Add steps specific for this group
+		// "“Live” data transmission"
+		// Has many read and write services so should lead to being able to reach data from ECU. Might have to have secuirty access version lead to authenticated read/writes?
+		// "DID data is sent on request only, and is for information that no ECU uses, but a service tool or a software tester can benefit from."
 	}
 
 	asset UDSStoredDataTransmissionServices extends UDSServer
 		info: "Represents all the UDS services provided by the functional unit 'Stored Data Transmission' running on an ECU."
 	{
 		// TODO: Add steps specific for this group
+		// Recovery of fault data
+		// Can clear and read diagnostics information, so possible read and delete data? BUT is not all data so how to connect with only diagnostics data?
 	}
 
 	asset UDSInputOutputControlServices extends UDSServer
 		info: "Represents all the UDS services provided by the functional unit 'Input Output Control' running on an ECU."
 	{
 		// TODO: Add steps specific for this group
+		// IDK here, need to read up more on specifics
+		// "The tester controls a modules inputs or outputs"
 	}
 
 	asset UDSRemoteActivationServices extends UDSServer
 		info: "Represents all the UDS services provided by the functional unit 'Remote Activation of Routine' running on an ECU."
 	{
 		// TODO: Add steps specific for this group
+		// "Run and recover results of a systems in built test"
 	}
 
 	asset UDSUploadDownloadServices extends UDSServer
 		info: "Represents all the UDS services provided by the functional unit 'Upload Download' running on an ECU."
 	{
 		// TODO: Add steps specific for this group
+		// Not same as Data Transmission
+		// This seems to be where upload of new firmware happens so should lead to maliciousFirmwareUpload.
+		// Can also "software from the control unit is transferred to the tester", so..read data? not really same since its reading the software?
+
 	}
 
 	asset TransmitterService extends Service
