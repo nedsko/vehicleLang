@@ -132,22 +132,27 @@ category System {
 				->  _machineAccess,
 					physicalMachines.manipulate
 
+		| offline
+				info: "When the ECU is taken offline by some other attack step. Offline means that the ECU is still powered on but unable to communicate on its bus. The effort needed to achieve this is applied on the distributions of the parent attacks."
+				->	denialOfService,
+					bypassMessageConfliction
+
 		| shutdown
-				info: "When the ECU is taken offline by some other attack step. The effort needed to achieve this is applied on the distributions of the parent attacks."
+				info: "When the ECU is powered off by some other attack step. The effort needed to achieve this is applied on the distributions of the parent attacks."
 				->	bypassMessageConfliction,
 					denialOfService // Deny access to data and executees
 
 		& changeOperationMode
-				info: "Put the ECU into diagnostics (if vehicle is moving slowly or is stopped) or even update mode (bootmode). Practically shutdown ECUs normal operation."
+				info: "Put the ECU into diagnostics (if vehicle is moving slowly or is stopped) or even update mode (bootmode). Leads to shutdown since attacker must have achieved access on this ECU to reach this step."
 				// This can bypass message conflictions and IDPS because the legitimate ECU will no lorger send messages and the attacker can imitate it, if carefull.
 				-> 	shutdown,
           firmware.maliciousFirmwareModification,
           uploadFirmware
 
 		& attemptChangeOperationMode [ExponentialDistribution(10.0)]
-				info: "Put the ECU into diagnostics (if vehicle is moving slowly or is stopped) or even update mode (bootmode) but after some effort."
-				-> 	bypassMessageConfliction,
-          firmware.maliciousFirmwareModification
+				info: "Put the ECU into diagnostics (if vehicle is moving slowly or is stopped) or even update mode (bootmode) but after some effort. This stops ECU from communicating on its bus -> offline"
+				-> 	offline,
+        firmware.maliciousFirmwareModification
 
 		# operationModeProtection
 				info: "Either prevent diagnostics mode after vehicles starts moving or allow diagnostics mode only after some physical change is done on vehicle."
@@ -448,9 +453,9 @@ category Networking {
 					denialOfService
 
 		& busOffAttack [UniformDistribution(1.0,2.0)]
-				info: "Exploits the error-handling scheme of in-vehicle networks to disconnect or shut down good/uncompromised ECUs or cause DoS on the entire network. This is an easy to mount attack. This is also applicable on CAN-FD."
+				info: "Exploits the error-handling scheme of in-vehicle networks to disconnect good/uncompromised ECUs or cause DoS on the entire network. This is an easy to mount attack. This is also applicable on CAN-FD."
 				rationale: "Kyong-Tak Cho and Kang G. Shin, Error Handling of In-vehicle Networks Makes Them Vulnerable (2016)"
-				->	networkECUs.shutdown,
+				->	networkECUs.offline,
 					denialOfService
 
 		# busOffProtection
@@ -529,12 +534,12 @@ category Networking {
 		| exploitBusGuardian [ExponentialDistribution(15.0)]
 				info: "Utilize Bus Guardian for sending well-directed faked error messages to deactivate controllers. BusGuardian is hardened so much effort is needed."
 				rationale: "Marko Wolf, Security Engineering for Vehicular IT Systems, Vieweg+Teubner (2009) & Philipp Mundhenk, Sebastian Steinhorst and Suhaib A. Fahmy, Security Analysis of Automotive Architectures using Probabilistic Model Checking (2015)"
-				->	networkECUs.shutdown
+				->	networkECUs.offline
 
 		& sleepFrameAttack [ExponentialDistribution(10.0)]
 				info: "Send well-directed forged sleep frames to deactivate power-saving capable FlexRay controller."
 				rationale: "Marko Wolf, Security Engineering for Vehicular IT Systems, Vieweg+Teubner (2009)"
-				->	networkECUs.shutdown
+				->	networkECUs.offline
 
 		# powerSavingIncapableNodes // Might need to be moved on ECU ??? But I leave it here for now...
 				info: "If FlexRay power-saving is not enabled then perform sleep frame attack."
